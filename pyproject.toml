@@ -3,11 +3,8 @@ name = "py-jsonlogger"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-authors = [
-    { name = "Bryan Cuneo", email = "bryan.cuneo@gmail.com" }
-]
+authors = [{ name = "Bryan Cuneo", email = "bryan.cuneo@gmail.com" }]
 requires-python = ">=3.12"
-dependencies = []
 
 [project.scripts]
 py-jsonlogger = "py_jsonlogger:main"
@@ -15,3 +12,10 @@ py-jsonlogger = "py_jsonlogger:main"
 [build-system]
 requires = ["uv_build>=0.12.1,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+addopts = "-s"
+
+[dependency-groups]
+dev = ["pytest>=9.1.1"]
