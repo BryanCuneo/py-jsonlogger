@@ -1,0 +1,1 @@
+### Work-in-progress sister-project to [ps-jsonlogger](https://github.com/BryanCuneo/ps-jsonlogger).
