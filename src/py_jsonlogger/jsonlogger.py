@@ -16,22 +16,37 @@ class Levels(IntEnum):
     VERBOSE  = 60
 
 class ConsoleStyles(StrEnum):
-    Simple    = "simple"
-    TimeSpan  = "timespan"
-    Timestamp = "timestamp"
+    SIMPLE    = "simple"
+    TIMESPAN  = "timespan"
+    TIMESTAMP = "timestamp"
 
 _Loggers = {}
 
 class Logger:
     JsonLoggerVersion = "1.3.0a"
 
-    def __init__(self, path: str, programName: str, printToConsole: Optional[str] = None, encoding: str = "utf-8", overwrite = False) -> None:
+    def __init__(
+            self,
+            path: str,
+            programName: str,
+            printToConsole: ConsoleStyles | str = None,
+            encoding: str = "utf-8",
+            overwrite = False) -> None:
+        
         self.start_time = datetime.now(timezone.utc).astimezone().isoformat()
         self.path = Path(path)
         self.program_name = programName
-        self.print_to_console = printToConsole
         self.encoding = encoding
         self.overwrite = overwrite
+
+
+        if isinstance(printToConsole, str):
+            printToConsole = printToConsole.lower()
+
+        try:
+            self.print_to_console = ConsoleStyles(printToConsole)
+        except ValueError:
+            raise ValueError(f"Invalid console style: {printToConsole}. Allowed: {[s.value for s in ConsoleStyles]}") from None
 
         if (self.overwrite or not self.path.is_file()):
             f = open(self.path, "w", encoding=self.encoding)
@@ -51,7 +66,6 @@ class Logger:
 
         try:
             initial_entry_json = json.dumps(initial_entry, indent=None)
-            print("Hello")
             with open(self.path, "a", encoding=self.encoding) as f:
                 f.write(initial_entry_json)
 
