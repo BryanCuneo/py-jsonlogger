@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import json
 import sys
 from datetime import datetime, timezone
@@ -73,3 +74,12 @@ class Logger:
                 print(f"{initial_entry["level"]} {datetime.fromisoformat(self.start_time).strftime('%Y-%m-%d %H:%M:%S')} {self.program_name}")
         except Exception as e:
             print(f"Error writing initial log entry: {e}")
+
+    def _add_to_initial_entry(newFieldName: str, value) -> None:
+        pass
+
+    def _log(level: Levels, message: str, called_from: str, context: list[object], include_call_stack: bool) -> None:
+        pass
+
+    def close(message: str = None) -> None:
+        pass
